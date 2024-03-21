@@ -60,4 +60,5 @@ export class PostListComponent implements OnInit, OnDestroy {
  onCancelEdit() {
     this.editingPostId = null;
  }
+ 
 }

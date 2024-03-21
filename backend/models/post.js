@@ -1,6 +1,7 @@
+// models/Post.js
 const mongoose = require('mongoose');
 
-const postSchema = mongoose.Schema({
+const PostSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -8,7 +9,11 @@ const postSchema = mongoose.Schema({
     content: {
         type: String,
         required: true
+    },
+    imageUrl: {
+        type: String,
+        required: false // Image URL is optional
     }
 });
 
-module.exports = mongoose.model('Post', postSchema);
+module.exports = mongoose.model('Post', PostSchema);

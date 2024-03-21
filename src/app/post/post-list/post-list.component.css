@@ -21,3 +21,8 @@
    .mat-action-row button {
     margin-left: 8px;
    }
+
+   .post-image {
+    width: 200px;
+    height: 200px;
+}

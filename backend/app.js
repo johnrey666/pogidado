@@ -5,14 +5,11 @@ const cors = require('cors');
 const Post = require('./models/post.js');
 const mongoose = require('mongoose');
 
-// Use bodyParser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Use cors middleware
 app.use(cors());
 
-// Connect to MongoDB
 mongoose.connect("mongodb+srv://07209292:09984831193@janrey.cym6m47.mongodb.net/janrey?retryWrites=true&w=majority&appName=janrey")
 .then(() => {
     console.log('Connected to the database');
@@ -20,7 +17,7 @@ mongoose.connect("mongodb+srv://07209292:09984831193@janrey.cym6m47.mongodb.net/
 .catch(() => {
     console.log('connection failed');
 });
-// Set CORS headers
+
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Headers", "Origin, x-Requested-with, Content-Type, Accept");
@@ -29,11 +26,11 @@ app.use((req, res, next) => {
 });
 
 // POST route for adding a new post
-// Example backend route for creating a new post
 app.post('/api/posts', (req, res) => {
     const post = new Post({
        title: req.body.title,
-       content: req.body.content
+       content: req.body.content,
+       imageUrl: req.body.imageUrl // Include the imageUrl field
     });
     post.save()
        .then(savedPost => {
@@ -43,9 +40,9 @@ app.post('/api/posts', (req, res) => {
          console.error(err);
          res.status(500).json({ message: 'Error saving post' });
        });
-   });
-   
-// app.js
+});
+
+// DELETE route for deleting a post
 app.delete('/api/posts/:id', async (req, res) => {
     try {
        const post = await Post.findByIdAndDelete(req.params.id);
@@ -56,12 +53,10 @@ app.delete('/api/posts/:id', async (req, res) => {
     } catch (error) {
        res.status(500).json({ message: 'Server error' });
     }
-   });
+});
 
 // PUT route for updating a post
 app.put('/api/posts/:id', async (req, res) => {
-    console.log('Received PUT request for post ID:', req.params.id);
-    console.log('Request body:', req.body);
     try {
        const post = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true });
        if (!post) {
@@ -74,7 +69,7 @@ app.put('/api/posts/:id', async (req, res) => {
 });
 
 // GET route for fetching all posts
-app.use('/api/posts', (req, res, next) => {
+app.get('/api/posts', (req, res) => { // Changed from app.use to app.get
    Post.find().then(documents => {
     res.status(200).json({
         message: 'Posts fetched successfully',

@@ -26,8 +26,9 @@ export class PostService {
         return this.postUpdated.asObservable();
     }
 
-    addPost(title: string, content: string): Observable<any> {
-        const postData = { title, content };
+
+    addPost(title: string, content: string, imageUrl: string): Observable<any> {
+        const postData = { title, content, imageUrl };
         return this.http.post(this.apiUrl, postData).pipe(
             tap(() => {
                 // Fetch the updated list of posts and emit the event
