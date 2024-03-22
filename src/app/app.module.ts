@@ -14,7 +14,7 @@ import { PostListComponent } from './post/post-list/post-list.component';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion'; 
 import { HttpClientModule } from '@angular/common/http';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatIconModule,
     CommonModule,
     MatExpansionModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

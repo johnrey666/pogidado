@@ -5,10 +5,12 @@ const cors = require('cors');
 const Post = require('./models/post.js');
 const mongoose = require('mongoose');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(cors());
+
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
+
+
 
 mongoose.connect("mongodb+srv://07209292:09984831193@janrey.cym6m47.mongodb.net/janrey?retryWrites=true&w=majority&appName=janrey")
 .then(() => {
@@ -27,19 +29,19 @@ app.use((req, res, next) => {
 
 // POST route for adding a new post
 app.post('/api/posts', (req, res) => {
-    const post = new Post({
-       title: req.body.title,
-       content: req.body.content,
-       imageUrl: req.body.imageUrl // Include the imageUrl field
-    });
-    post.save()
-       .then(savedPost => {
-         res.status(201).json(savedPost);
-       })
-       .catch(err => {
-         console.error(err);
-         res.status(500).json({ message: 'Error saving post' });
-       });
+  const post = new Post({
+     title: req.body.title,
+     content: req.body.content,
+     imageUrl: req.body.imageUrl // Include the imageUrl field
+  });
+  post.save()
+     .then(savedPost => {
+       res.status(201).json(savedPost);
+     })
+     .catch(err => {
+       console.error(err);
+       res.status(500).json({ message: 'Error saving post', error: err.message });
+     });
 });
 
 // DELETE route for deleting a post

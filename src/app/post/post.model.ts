@@ -3,4 +3,5 @@ export interface Post {
     title: string;
     content: string;
     imageUrl: string;
+    file: string; // Assuming you want to store the file name or a reference
 }
